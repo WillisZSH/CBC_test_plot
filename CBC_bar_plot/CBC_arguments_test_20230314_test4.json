@@ -1,0 +1,23 @@
+{
+   "stype":
+   {
+      "example":{
+            "name":"WBC count",
+            "y_limit":[4, 20]  
+      },
+      "custom":{
+         "1":
+         {
+            "name":"HCT value",
+            "y_limit":[40, 60]
+         }
+      }
+   },
+   "files":
+   {
+      "input":"~/Downloads/20230316_Female vs Male_STAT1_AGB6_B6_D6.xlsx",
+      "output_folder":"~/Desktop/.../20230316_test4"
+   }
+}
+
+

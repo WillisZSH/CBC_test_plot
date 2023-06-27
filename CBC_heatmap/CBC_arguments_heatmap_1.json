@@ -1,0 +1,60 @@
+{
+   "stype":
+   {
+      "example":{
+            "name":"WBC count",
+            "y_limit":[4, 20]  
+      }
+   },
+   "example":
+   {
+      "//_comment1":{"name": ["WBC_count", "NEUT_count", "LYMPH_count", "MONO_count", "EOS_count", "BASO_count", 
+      "NEUT_value", "LYMPH_value", "Mono_value", "EOS_value",  "BASO_value","NLR_value","RBC_count", "HGB_value", 
+      "HCT_value", "MCV_value", "MCH_value", "MCHC_value", "RDW-CV", "RET_count" , "RET_value", "PLT_count", 
+      "MPV_value", "PCT_value", "PDW_value"]
+      },
+      "//_comment2":{"name":[
+      "STAT1_DENV2F_D3", "AGB6_PBSF_D3", "AGB6_DENV2F_D3", "B6_PBSM_D3", "B6_DENV2M_D3", "STAT1_PBSM_D3", 
+      "STAT1_DENV2M_D3", "AGB6_PBSM_D3", "AGB6_DENV2M_D3", "B6_PBSF_D6", "B6_DENV2F_D6", "STAT1_PBSF_D6", "STAT1_DENV2F_D6", 
+      "AGB6_PBSF_D6", "AGB6_DENV2F_D6", "B6_PBSM_D6", "B6_DENV2M_D6", "STAT1_PBSM_D6", "STAT1_DENV2M_D6", "AGB6_PBSM_D6", 
+      "AGB6_DENV2M_D6", "B6_PBSF_D3", "B6_DENV2F_D3", "STAT1_PBSF_D3"]
+      }
+   },
+   "order":
+   {
+      "CBC_order":{
+         "name":[
+         "PDW_value", "PCT_value", "LYMPH_count", "MONO_count", "EOS_count", "BASO_count", 
+         "NEUT_value", "LYMPH_value", "Mono_value", "EOS_value",  "BASO_value","NLR_value","RBC_count", "HGB_value", 
+         "HCT_value", "MCV_value", "MCH_value", "MCHC_value", "RDW-CV", "RET_count" , "RET_value", "PLT_count", 
+         "MPV_value", "NEUT_count", "WBC_count"
+      ]
+      },
+      "Group_order":{
+      "name":["STAT1_DENV2F_D3", "AGB6_PBSF_D3", "AGB6_DENV2F_D3", "B6_PBSM_D3", "B6_DENV2M_D3", "STAT1_PBSM_D3", 
+      "STAT1_DENV2M_D3", "AGB6_PBSM_D3", "AGB6_DENV2M_D3", "B6_PBSF_D6", "B6_DENV2F_D6", "STAT1_PBSF_D6", "STAT1_DENV2F_D6", 
+      "AGB6_PBSF_D6", "AGB6_DENV2F_D6", "B6_PBSM_D6", "B6_DENV2M_D6", "STAT1_PBSM_D6", "STAT1_DENV2M_D6", "AGB6_PBSM_D6", 
+      "AGB6_DENV2M_D6", "B6_PBSF_D3", "B6_DENV2F_D3", "STAT1_PBSF_D3"]
+      }
+   },
+   "cluster":
+   {
+      "Example":{
+         "logical": ["TRUE", "FALSE"]
+      },
+      "CBC":{
+         "logical":"TRUE"
+      },
+      "Grouping":{
+         "logical":"TRUE"
+      }
+   },
+   "files":
+   {
+      "input":"~/Desktop/.../20230316_Female vs Male_STAT1_AGB6_B6_D3_6.xlsx",
+      "output_folder":"~/Desktop/.../CBC_heatmap_output"
+   }
+}
+
+
+
