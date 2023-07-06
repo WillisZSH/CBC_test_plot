@@ -25,7 +25,7 @@ The following file are require to generate the analysis plot:
 
 ### Script
 1. CBC_barplot.R
-Usage:`Rscript CBC_barplot.R CBC_arguments.json`
+Usage: `Rscript CBC_barplot.R CBC_arguments.json`
 
 ### Adjustment
 1. Customized arguments in ***.json*** file were use to fit y-axis limit for better presentation.
