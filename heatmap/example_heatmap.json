@@ -51,8 +51,8 @@
    },
    "files":
    {
-      "input":"~/Desktop/.../20230316_Female vs Male_STAT1_AGB6_B6_D3_6.xlsx",
-      "output_folder":"~/Desktop/.../CBC_heatmap_output"
+      "input":"/path/to/example.xlsx",
+      "output_folder":"/path/to/heatmap_output"
    }
 }
 

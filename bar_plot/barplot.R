@@ -10,7 +10,7 @@ suppressWarnings(suppressMessages( require( ggpubr ) ) )
 
 args <- commandArgs( trailingOnly = TRUE )
 
-file_dir_default <- "/path/to/example.json"
+file_dir_default <- "/path/to/example_barplot.json"
 file_dir_args <- c()
 file_dir_args <- as.character(args[1])
 file_dir <- ifelse(is.na(file_dir_args), file_dir_default, file_dir_args)
@@ -170,7 +170,7 @@ rm(list = ls())
 
 
 args <- commandArgs( trailingOnly = TRUE )
-file_dir_default <- "/path/to/example.json"
+file_dir_default <- "/path/to/example_barplot.json"
 file_dir_args <- c()
 file_dir_args <- as.character(args[1])
 file_dir <- ifelse(is.na(file_dir_args), file_dir_default, file_dir_args)

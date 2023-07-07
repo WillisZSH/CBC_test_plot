@@ -1,18 +1,15 @@
 # Script for CBC heatmap plot
-# Create at 2022/03/25, updated at 2023/04/06
-# Final version of heatmap, first version of adjustment
-#Waring: Grouping order must be fixed (Mouse_treatment_Day)
-#Waring:
+
 suppressWarnings(suppressMessages( require( rjson ) ) )
 suppressWarnings(suppressMessages( require( stringr ) ) )
 suppressWarnings(suppressMessages( require( openxlsx ) ) )
-suppressWarnings(suppressMessages( require( tidyverse ) ) )  ## for data wrangling
+suppressWarnings(suppressMessages( require( tidyverse ) ) )  
 suppressWarnings(suppressMessages( require( ggplot2 ) ) )
 suppressWarnings(suppressMessages( require( viridis ) ) )
 suppressWarnings(suppressMessages( require( plotly ) ) )
 suppressWarnings(suppressMessages( require( d3heatmap ) ) )
-suppressWarnings(suppressMessages( require( pheatmap ) ) ) ## for heatmap generation
-suppressWarnings(suppressMessages( require( ggplotify ) ) )  ## to convert pheatmap to ggplot2
+suppressWarnings(suppressMessages( require( pheatmap ) ) ) 
+suppressWarnings(suppressMessages( require( ggplotify ) ) )  
 suppressWarnings(suppressMessages( require( lubridate ) ) ) 
 
 # Define the function ----
@@ -91,8 +88,7 @@ Group_mean <- function(df)
 # File read in and sorting ----
 args <- commandArgs( trailingOnly = TRUE )
 
-#file_dir_default <- "~/Desktop/.../CBC_arguments.json"
-file_dir_default <- "~/Desktop/.../CBC_arguments_heatmap_1.json"
+file_dir_default <- "/path/to/example.json"
 file_dir_args <- c()
 file_dir_args <- as.character(args[1])
 file_dir <- ifelse(is.na(file_dir_args), file_dir_default, file_dir_args)
@@ -127,8 +123,6 @@ Grouping_assign_D6 <- str_match(D6_df$Grouping, pattern = "(.*)_(.*)_(.*)")
 D6_df$Mouse <- Grouping_assign_D6[,2]
 D6_df$Challenge <- Grouping_assign_D6[,3]
 D6_df$Day <- Grouping_assign_D6[,4]
-
-# Combined two df
 Df_3_6 <- rbind(D3_df, D6_df)
 Df_3_6$Day_ch <- paste0(Df_3_6$Day, "_", Df_3_6$Challenge)
 
@@ -174,8 +168,6 @@ if(is.null(config$order$CBC_order$name))
 }
 
 # Grouping order test
-# row_tes <- row.names(df_com_no_group)
-# row_order <- row_tes[c(2:24,1)]
 custom_name_group <- c()
 if(is.null(config$order$Group_order$name))
 {
@@ -202,8 +194,7 @@ hm_pheat <- pheatmap(df_com_no_group, cluster_cols = col_cluster_logical, cluste
                      labels_row = make_bold_names(df_com_no_group, rownames, rownames(df_com_no_group)), labels_col = make_bold_names(df_com_no_group, colnames, colnames(df_com_no_group)))
 
 
-# hm_gg <- as.ggplot(hm_pheat)
- ggsave( plot = hm_pheat, filename = paste0(config$files$output_folder,  "/","CBC_heatmap_", now(),".pdf"), width = round((cellwidth_cus/2)-(cellwidth_cus/2)*0.1), height = 10, units = "in", dpi = "retina" )
+ggsave( plot = hm_pheat, filename = paste0(config$files$output_folder,  "/","CBC_heatmap_", now(),".pdf"), width = round((cellwidth_cus/2)-(cellwidth_cus/2)*0.1), height = 10, units = "in", dpi = "retina" )
 
 
 
