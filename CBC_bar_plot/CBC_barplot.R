@@ -1,14 +1,7 @@
-# Script for CBC result plot
-# version same as CBC_result_plot_command_line_tool_Ko_V3.7.R
-# updated at 2022/03/22 
-# Add 1.Conditional control of True_NA 2. Conditional control of config$stype$custom with or without parameters
-# for individual and combined plot
-# Usage: Rscript CBC_barplot.R ~/Desktop/CBC_json_R/CBC_arguments.json
-# Waring: Grouping order must be fixed (Mouse_treatment_Day)
-# Waring:
+# Script for CBC result barplot
+
 suppressWarnings(suppressMessages( require( rjson ) ) )
 suppressWarnings(suppressMessages( require( stringr ) ) )
-#suppressWarnings(suppressMessages( require( seqinr ) ) )
 suppressWarnings(suppressMessages( require( openxlsx ) ) )
 suppressWarnings(suppressMessages( require( tidyverse ) ) )
 suppressWarnings(suppressMessages( require( ggplot2 ) ) )
@@ -17,8 +10,7 @@ suppressWarnings(suppressMessages( require( ggpubr ) ) )
 
 args <- commandArgs( trailingOnly = TRUE )
 
-#file_dir_default <- "~/Desktop/CBC_anaysis/CBC_arguments.json"
-file_dir_default <- "~/Desktop/.../CBC_arguments_test_20230314_test4.json"
+file_dir_default <- "/path/to/example.json"
 file_dir_args <- c()
 file_dir_args <- as.character(args[1])
 file_dir <- ifelse(is.na(file_dir_args), file_dir_default, file_dir_args)
@@ -53,7 +45,6 @@ Grouping_assign_D6 <- str_match(D6_df$Grouping, pattern = "(.*)_(.*)_(.*)")
 D6_df$Mouse <- Grouping_assign_D6[,2]
 D6_df$Challenge <- Grouping_assign_D6[,3]
 D6_df$Day <- Grouping_assign_D6[,4]
-# Combined two df
 Df_3_6 <- rbind(D3_df, D6_df)
 Df_3_6$Day_ch <- paste0(Df_3_6$Day, "_", Df_3_6$Challenge)
 
@@ -93,7 +84,7 @@ levels(factor( as.character(Df_3_6_no_ref$Day_Ms_Ch), c(DMC_unique)))
 # set the order of x-axis title
 Df_3_6_no_ref$Day_Ms_Ch = factor( as.character(Df_3_6_no_ref$Day_Ms_Ch), c(DMC_unique))
 
-# custom name must be the upper case ex: "WBC"
+# Customized name must be the upper case ex: "WBC"
 line_number <- 0
 custom_name <- c()
 if(is.null(config$stype$custom)) 
@@ -108,16 +99,14 @@ if(is.null(config$stype$custom))
   }
 }
 
-#for loop can not save multiple plot in one list properly, so i use lapply instead, which can save multiple plot in ine list, will not show weird error or bad present of plot
 for (i in 3:27)
 {
   print(paste0("i = ", i))
   colname_temp <- ls_colnames_2[i]
-  colname_temp_short <- str_match(colname_temp, "(([A-Za-z]*)(-|_))([A-Za-z]*)")[,3]   #str_match(colname_temp, "([A-Za-z]*)(-| )([A-Za-z]*)")[,2]  #(-| ) space can also be match
+  colname_temp_short <- str_match(colname_temp, "(([A-Za-z]*)(-|_))([A-Za-z]*)")[,3]   
   colname_temp_short2 <- str_match(colname_temp, "(([A-Za-z]*)(-|_))([A-Za-z]*)")[,5]
   colnames_temp_partial <- str_match(colname_temp, "(([A-Za-z]*)(-|_))([A-Za-z]*)")[,2]
   colnames_temp_partial2 <- gsub("_", " ", colnames_temp_partial)
-  #y_axis_min <- as.numeric(Df_3_6_no_ref[which.min(as.numeric(Df_3_6_no_ref[,i])), i])
   y_axis_min <- 0
   y_axis_max <- as.numeric(Df_3_6_no_ref[which.max(as.numeric(Df_3_6_no_ref[,i])), i])* 1.2
   default_y_value <- c(y_axis_min, y_axis_max)
@@ -135,28 +124,19 @@ for (i in 3:27)
     }else{
       y_axis_limit <- default_y_value
     }
+
   #ggbreak for y-axis jump
   temp_plot =
     Df_3_6_no_ref%>%
     ggplot(aes(x = Day_Ms_Ch, y = as.numeric(Df_3_6_no_ref[,i])), na.rm = TRUE) +
-    # plot bars
     geom_bar(stat="summary", fun = "mean", fill = fill_color, color = "black", size = 1, width = 0.7, na.rm = TRUE)+
-    # stat_summary(fun = mean, geom = "bar", width = 0.7) +
-    # plot error bars
     stat_summary(fun.data = mean_sdl, fun.args = list(mult = 1),
                  geom = "errorbar", width = 0.3, size = line_size, na.rm = FALSE) +
-    # plot individual points
     geom_jitter(width = 0.1, na.rm = FALSE) +
-    #  geom_jitter(position = position_jitter(width = 0.1), na.rm = FALSE)v+
-    #geom_point(na.rm = FALSE) +
-    # set scale limits
     scale_y_continuous(expand = expansion(mult = c(0, 0))) +
     coord_cartesian(ylim = as.numeric(y_axis_limit))+
-    #set x-axis text label
     scale_x_discrete(labels = DMC_unique)+
-    # set labs
     labs(title = title_for_plot[i], x = "", y = y_axis[i]) +
-    # theme
     theme_foundation(base_size = base_size, base_family = "sans") +
     theme(
       panel.grid.major = element_blank(),
@@ -180,7 +160,6 @@ for (i in 3:27)
   plot_list = c(plot_list, paste(title_for_plot[i], "_plot", sep = ""))
   assign(paste(title_for_plot[i], "_plot", sep = ""), temp_plot)
   print(paste("--------", title_for_plot[i],  "_plot finished -------------", sep = ""))
-  #figure_save = "~/Desktop/.../Mouse_combined"
   figure_save = config$files$output_folder
   filename = paste0(figure_save, "/", title_for_plot[i], "_plot.pdf")
   ggsave( plot = temp_plot, filename = filename,  height = 6, width = 8, units = "in", dpi = "retina" )
@@ -191,16 +170,12 @@ rm(list = ls())
 
 
 args <- commandArgs( trailingOnly = TRUE )
-
-#file_dir_default <- "~/Desktop/CBC_anaysis/CBC_arguments.json"
-file_dir_default <- "~/Desktop/.../CBC_arguments_test_20230314_test4.json"
+file_dir_default <- "/path/to/example.json"
 file_dir_args <- c()
 file_dir_args <- as.character(args[1])
 file_dir <- ifelse(is.na(file_dir_args), file_dir_default, file_dir_args)
 config = rjson::fromJSON( file = file_dir )
 
-#Path <- as.character(commandArgs( trailingOnly = TRUE ))
-#df <- read.xlsx(Path, sheet = 1)
 df <- read.xlsx(config$files$input, sheet = 1)
 
 title_for_plot <-c("", "", "WBC count", "NEUT count", "LYMPH count", "MONO count", "EOS count", "BASO count", "NEUT value", "LYMPH value", "Mono value", "EOS value", "BASO value", 
@@ -270,7 +245,6 @@ levels(factor( as.character(Df_3_6_no_ref$Day_Ms_Ch), c(DMC_unique)))
 # set the order of x-axis title
 Df_3_6_no_ref$Day_Ms_Ch = factor( as.character(Df_3_6_no_ref$Day_Ms_Ch), c(DMC_unique))
 
-# custom name must be the upper case ex: "WBC"
 line_number <- 0
 custom_name <- c()
 if(is.null(config$stype$custom)) 
@@ -290,11 +264,10 @@ plotList <- lapply(
   function(i) {
     print(paste0("i = ", i))
     colname_temp <- ls_colnames_2[i]
-    colname_temp_short <- str_match(colname_temp, "(([A-Za-z]*)(-|_))([A-Za-z]*)")[,3]   #str_match(colname_temp, "([A-Za-z]*)(-| )([A-Za-z]*)")[,2]  #(-| ) space can also be match
+    colname_temp_short <- str_match(colname_temp, "(([A-Za-z]*)(-|_))([A-Za-z]*)")[,3]   
     colname_temp_short2 <- str_match(colname_temp, "(([A-Za-z]*)(-|_))([A-Za-z]*)")[,5]
     colnames_temp_partial <- str_match(colname_temp, "(([A-Za-z]*)(-|_))([A-Za-z]*)")[,2]
     colnames_temp_partial2 <- gsub("_", " ", colnames_temp_partial)
-    #y_axis_min <- as.numeric(Df_3_6_no_ref[which.min(as.numeric(Df_3_6_no_ref[,i])), i])
     y_axis_min <- 0
     y_axis_max <- as.numeric(Df_3_6_no_ref[which.max(as.numeric(Df_3_6_no_ref[,i])), i])* 1.2
     default_y_value <- c(y_axis_min, y_axis_max)
@@ -317,25 +290,15 @@ plotList <- lapply(
     temp_plot2 =
       Df_3_6_no_ref%>%
       ggplot(aes(x = Day_Ms_Ch, y = as.numeric(Df_3_6_no_ref[,i])), na.rm = TRUE) +
-      # plot bars
       geom_bar(stat="summary", fun = "mean", fill = fill_color, color = "black", size = 1, width = 0.7, na.rm = TRUE)+
-      # stat_summary(fun = mean, geom = "bar", width = 0.7) +
-      # plot error bars
       stat_summary(fun.data = mean_sdl, fun.args = list(mult = 1), 
                    geom = "errorbar", width = 0.3, size = line_size, na.rm = FALSE) +
-      # plot individual points
       geom_jitter(size = 1, width = 0.1, na.rm = FALSE) +
-      #  geom_jitter(position = position_jitter(width = 0.1), na.rm = FALSE)v+
-     # geom_point(na.rm = FALSE) +
-      # set scale limits
       scale_y_continuous(expand = expansion(mult = c(0, 0))) + 
       coord_cartesian(ylim = as.numeric(y_axis_limit))+
-      #set x-axis text label
       scale_x_discrete(labels = DMC_unique)+
-      # set labs
       labs(title = title_for_plot[i], x = "", y = y_axis[i]) + 
       ggtitle(title_for_plot[i])+
-      # theme
       theme_foundation(base_size = base_size, base_family = "sans") + 
       theme(
         panel.grid.major = element_blank(),
@@ -360,16 +323,14 @@ plotList <- lapply(
     plot_list = c(plot_list, paste(title_for_plot[i], "_plot", sep = ""))
     assign(paste(title_for_plot[i], "_plot", sep = ""), temp_plot2)
     print(paste("--------", title_for_plot[i],  " multiple plot combined finished -------------", sep = ""))
-    #figure_save = "~/Desktop/.../Mouse_combined"
     figure_save = config$files$output_folder
     filename = paste0(figure_save, "/", title_for_plot[i], "_plot2.pdf")
-    #ggsave( plot = temp_plot2, filename = filename,  height = 6, width = 8, units = "in", dpi = "retina" )
-    temp_plot2 #put temp_plot in list
+    ggsave( plot = temp_plot2, filename = filename,  height = 6, width = 8, units = "in", dpi = "retina" )
+    temp_plot2 
   }
 )
 
 allplots <- ggarrange(plotlist=plotList,
-                      #labels = c("A", "B", "C", "D"),
                       common.legend = TRUE,
                       ncol = 3, nrow = 3)
 figure_save = config$files$output_folder

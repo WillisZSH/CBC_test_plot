@@ -15,8 +15,8 @@
    },
    "files":
    {
-      "input":"~/Downloads/20230316_Female vs Male_STAT1_AGB6_B6_D6.xlsx",
-      "output_folder":"~/Desktop/.../20230316_test4"
+      "input":"/path/to/example.xlsx",
+      "output_folder":"/path/to/example_output"
    }
 }
 
