@@ -1,3 +1,3 @@
-# CBC result visualization
+# CBC data visualization
 
-## The instructions for using barplots and heatmaps are provided in their respective folders.
+### The instructions for using barplots and heatmaps are provided in their respective folders.
