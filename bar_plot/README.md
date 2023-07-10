@@ -17,13 +17,13 @@ ggpubr
 ```
 ### Input files
 The following file are require to generate the analysis plot:
-* data.xlsx
-* CBC_arguments.json
+* example.xlsx
+* example_barplot.json
 
 
 ### Script
-1. CBC_barplot.R
-Usage: `Rscript CBC_barplot.R CBC_arguments.json`
+1. barplot.R
+Usage: `Rscript barplot.R example_barplot.json`
 
 ### Adjustment
 1. Customized arguments in ***.json*** file were use to fit y-axis limit for better presentation.

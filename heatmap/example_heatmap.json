@@ -1,11 +1,4 @@
 {
-   "stype":
-   {
-      "example":{
-            "name":"WBC count",
-            "y_limit":[4, 20]  
-      }
-   },
    "example":
    {
       "//_comment1":{"name": ["WBC_count", "NEUT_count", "LYMPH_count", "MONO_count", "EOS_count", "BASO_count", 
