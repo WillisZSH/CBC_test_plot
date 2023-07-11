@@ -14,7 +14,6 @@ ggplot2
 pheatmap
 ggplotify
 lubridate
-
 ```
 ### Input files
 The following file are require to generate the analysis plot:
