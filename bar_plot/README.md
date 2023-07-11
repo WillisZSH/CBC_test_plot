@@ -22,7 +22,7 @@ The following file are require to generate the analysis plot:
 
 ### Script
 - barplot.R
-  -Usage: `Rscript barplot.R example_barplot.json`
+  - Usage: `Rscript barplot.R example_barplot.json`
 
 ### Adjustment
 #### json

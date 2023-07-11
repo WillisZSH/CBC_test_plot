@@ -23,7 +23,7 @@ The following file are require to generate the analysis plot:
 
 ### Script
 - heatmap.R
-  -Usage: `Rscript heatmap.R example_heatmap.json`
+  - Usage: `Rscript heatmap.R example_heatmap.json`
 
 ### Adjustment
 #### json
