@@ -22,8 +22,8 @@ The following file are require to generate the analysis plot:
 
 
 ### Script
-1. heatmap.R
-Usage: `Rscript heatmap.R example_heatmap.json`
+- heatmap.R
+  -Usage: `Rscript heatmap.R example_heatmap.json`
 
 ### Adjustment
 #### json
