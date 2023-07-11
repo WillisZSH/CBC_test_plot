@@ -26,10 +26,6 @@ The following file are require to generate the analysis plot:
 Usage: `Rscript barplot.R example_barplot.json`
 
 ### Adjustment
-1. Customized arguments in ***.json*** file were use to fit y-axis limit for better presentation.
-2. The path of input and output file can also adjust in  ***.json*** file.
-
-### Adjustment
 #### json
 1. The customized argument ***`custom`*** under ***`stype`*** was used to change y-axis limit for better presentation.
 2. ***`files`*** was used to adjust the path of input and output file.
