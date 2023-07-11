@@ -68,8 +68,8 @@ challenge_rep <- rep(unique(Df_3_6_no_ref$Challenge), lth_uniq_Day*lth_uniq_mous
 ls_colnames_2 <- colnames(Df_3_6_no_ref)
 color <- rep(c("gray38", "gray70"), 20)
 fill_color <- color[1:(length(unique(Df_3_6_no_ref$Grouping)))]
-line_size <- 1 # defining variable upfront as we will re-use it
-base_size <- 12 # defining separately, same as for line_size
+line_size <- 1 
+base_size <- 12 
 axis_text_rel_size = -1
 title_text_rel_size = +2
 y_axis <- c("", "", "K/uL", "K/uL", "K/uL", "K/uL", "K/uL", "K/uL", "%", "%", "%", "%", "%", "Ratio", "M/uL", "g/dL", "%", "fL", "pg", "g/dL", "%", "K/uL", "%", "K/uL", "fL", "%", "fL", "",
